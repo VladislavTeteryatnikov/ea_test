@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('account_id');
+            $table->foreign('account_id')->references('id')->on('accounts');
 
             $table->string('g_number');
             $table->date('date');
