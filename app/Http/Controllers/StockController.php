@@ -15,6 +15,13 @@ class StockController extends Controller
         $dateFrom = '2024-12-18';
         $dateTo = null;
         $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
+        $accountId = Account_api_service::query()
+            ->where('token_access', '=', $token)
+            ->value('account_id');
+        if (!$accountId) {
+            echo 'Аккаунт не существует';
+            return;
+        };
         $keyForLinks = 'links';
         $lastLink = self::getLastLink($url, $dateFrom, $dateTo, $token, $keyForLinks);
 
@@ -24,6 +31,7 @@ class StockController extends Controller
 
             foreach ($allData as $data){
                 $stock = Stock::query()->create([
+                    'account_id' =>  $accountId,
                     'date' => $data['date'],
                     'last_change_date' => $data['last_change_date'],
                     'supplier_article' => $data['supplier_article'],

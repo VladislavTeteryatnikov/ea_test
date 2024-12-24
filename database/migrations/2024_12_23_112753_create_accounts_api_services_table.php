@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('token_id');
             $table->foreign('token_id')->references('id')->on('tokens');
-            $table->string('token_access')->unique();
+            $table->string('token')->unique();
 
             $table->timestamps();
         });

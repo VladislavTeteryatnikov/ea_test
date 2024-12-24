@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account_api_service;
 use App\Models\Sale;
 
 class SaleController extends Controller
@@ -16,6 +17,13 @@ class SaleController extends Controller
         $dateTo = '2024-12-17';
         $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
         $keyForLinks = 'links';
+        $accountId = Account_api_service::query()
+            ->where('token_access', '=', $token)
+            ->value('account_id');
+        if (!$accountId) {
+            echo 'Аккаунт не существует';
+            return;
+        };
         $lastLink = self::getLastLink($url, $dateFrom, $dateTo, $token, $keyForLinks);
         for ($page = 1; $page <= (int)$lastLink; $page++) {
             $keyForData = 'data';
@@ -23,6 +31,7 @@ class SaleController extends Controller
 
             foreach ($allData as $data){
                 $sale = Sale::query()->create([
+                    'account_id' =>  $accountId,
                     'g_number' => $data['g_number'],
                     'date' => $data['date'],
                     'last_change_date' => $data['last_change_date'],

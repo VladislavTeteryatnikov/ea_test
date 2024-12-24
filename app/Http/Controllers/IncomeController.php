@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account_api_service;
 use App\Models\Income;
 
 class IncomeController extends Controller
@@ -15,6 +16,13 @@ class IncomeController extends Controller
         $dateFrom = '2000-12-17';
         $dateTo = '2024-12-17';
         $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
+        $accountId = Account_api_service::query()
+            ->where('token_access', '=', $token)
+            ->value('account_id');
+        if (!$accountId) {
+            echo 'Аккаунт не существует';
+            return;
+        };
         $keyForLinks = 'links';
         $lastLink = self::getLastLink($url, $dateFrom, $dateTo, $token, $keyForLinks);
         for ($page = 1; $page <= (int)$lastLink; $page++) {
@@ -23,6 +31,7 @@ class IncomeController extends Controller
 
             foreach ($allData as $data){
                 $income = Income::query()->create([
+                    'account_id' =>  $accountId,
                     'income_id' => $data['income_id'],
                     'number' => $data['number'],
                     'date' => $data['date'],

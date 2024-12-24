@@ -15,6 +15,13 @@ class OrderController extends Controller
         $dateFrom = '2000-12-17';
         $dateTo = '2024-12-17';
         $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
+        $accountId = Account_api_service::query()
+            ->where('token_access', '=', $token)
+            ->value('account_id');
+        if (!$accountId) {
+            echo 'Аккаунт не существует';
+            return;
+        };
         $keyForLinks = 'links';
         $lastLink = self::getLastLink($url, $dateFrom, $dateTo, $token, $keyForLinks);
 
@@ -24,6 +31,7 @@ class OrderController extends Controller
 
             foreach ($allData as $data){
                 $order = Order::query()->create([
+                    'account_id' =>  $accountId,
                     'g_number' => $data['g_number'],
                     'date' => $data['date'],
                     'last_change_date' => $data['last_change_date'],
