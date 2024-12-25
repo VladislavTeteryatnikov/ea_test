@@ -19,7 +19,7 @@ class AddApiService extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Добавление API-сервиса';
 
     /**
      * Execute the console command.
@@ -28,6 +28,8 @@ class AddApiService extends Command
     {
         $nameApiService = $this->argument('nameApiService');
         $urlApiService = $this->argument('urlApiService');
+
+        //Проверка, что api-сервиса с таким названием или url не существует
         $apiService =  Api_service::query()
             ->where('name', '=', $nameApiService)
             ->orWhere('url', '=', $urlApiService)
@@ -36,6 +38,8 @@ class AddApiService extends Command
             echo "Api сервис с таким названием или URL уже существует";
             return;
         }
+
+        //Добавляем новый api-сервис
         $newApiService = Api_service::query()->create([
             'name' => $nameApiService,
             'url' => $urlApiService,

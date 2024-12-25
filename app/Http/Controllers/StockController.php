@@ -60,6 +60,10 @@ class StockController extends Controller
         echo 'Данные успешно добавлены в БД';
     }
 
+    /**
+     * Запись актуальных данных 'за сегодня' в таблицу Stocks
+     * @param string $token токен доступа к api
+     */
     public static function updateStocksTable(string $token)
     {
         $url = 'http://89.108.115.241:6969/api/stocks';
@@ -91,8 +95,7 @@ class StockController extends Controller
             ->get();
 
         //Если количество данных, полученных по api, и в моей БД совпадают
-        if ($allData->count() === $myData->count())
-        {
+        if ($allData->count() === $myData->count()) {
             echo 'Новых данных нет';
             return;
         }
@@ -125,7 +128,7 @@ class StockController extends Controller
                     'discount' => $data['discount'],
             ]);
         }
-        echo 'Данные успешно обновлены в БД';
+        echo 'Данные в таблице Stocks успешно обновлены';
     }
 
 }

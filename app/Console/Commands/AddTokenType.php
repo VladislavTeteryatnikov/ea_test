@@ -19,7 +19,7 @@ class AddTokenType extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Добавление типа токена (bearer, api-key и тд)';
 
     /**
      * Execute the console command.
@@ -27,11 +27,14 @@ class AddTokenType extends Command
     public function handle()
     {
         $tokenType = $this->argument('tokenType');
+        //Тип токена должен быть уникальным
         $token =  Token::query()->where('type', '=', $tokenType)->exists();
         if ($token) {
             echo "Token type $tokenType уже существует";
             return;
         }
+
+        //Добавляем тип токена
         $newToken = Token::query()->create([
             'type' => $tokenType,
         ]);

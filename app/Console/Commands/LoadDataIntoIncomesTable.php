@@ -41,8 +41,8 @@ class LoadDataIntoIncomesTable extends Command
             return;
         }
 
+        //Удаляем все данные из таблицы для этого аккаунта и загружаем заново
         Income::query()->where('account_id', $accountId)->delete();
-
         IncomeController::writeInDb($token);
     }
 }

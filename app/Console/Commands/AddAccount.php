@@ -20,7 +20,7 @@ class AddAccount extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Добавление аккаунта для компании';
 
     /**
      * Execute the console command.
@@ -29,12 +29,15 @@ class AddAccount extends Command
     {
         $companyId = $this->argument('idCompany');
         $accountName = $this->argument('nameAccount');
+
+        //Проверка, что такая компания существует
         $company =  Company::query()->find($companyId);
         if (!$company) {
             echo "Компании с id = $companyId не существует";
             return;
         }
 
+        //Добавляем аккаунт
         $account = Account::query()->create([
             'name' => $accountName,
             'company_id' => $companyId,

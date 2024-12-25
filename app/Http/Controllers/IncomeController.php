@@ -16,12 +16,11 @@ class IncomeController extends Controller
      */
     public static function writeInDb(string $token)
     {
-        //throw new Exception('Too many requests');
-        //abort(429);
         $url = 'http://89.108.115.241:6969/api/incomes';
         $dateFrom = '2000-12-17';
         $dateTo = '2024-12-17';
 
+        //Проверка существования аккаунта с таким токеном
         $accountId = Account_api_service::query()
             ->where('token_access', '=', $token)
             ->value('account_id');
@@ -58,6 +57,10 @@ class IncomeController extends Controller
         echo 'Данные успешно добавлены в БД';
     }
 
+    /**
+     * Запись актуальных данных 'за сегодня' в таблицу Incomes
+     * @param string $token токен доступа к api
+     */
     public static function updateIncomesTable(string $token)
     {
         $url = 'http://89.108.115.241:6969/api/incomes';
@@ -74,7 +77,7 @@ class IncomeController extends Controller
             return;
         }
 
-        //Данные, полученные по api
+        //Актуальные данные, полученные по api
         $allData = self::getData($url, $dateFrom, $dateTo, $token, $keyForData);
 
         //Если по api не получили никаких новых данных
@@ -89,8 +92,7 @@ class IncomeController extends Controller
             ->get();
 
         //Если количество данных, полученных по api, и в моей БД совпадают
-        if ($allData->count() === $myData->count())
-        {
+        if ($allData->count() === $myData->count()) {
             echo 'Новых данных нет';
             return;
         }
@@ -116,6 +118,6 @@ class IncomeController extends Controller
                 'nm_id' => $data['nm_id'],
             ]);
         }
-        echo 'Данные успешно обновлены в БД';
+        echo 'Данные в таблице Incomes успешно обновлены';
     }
 }

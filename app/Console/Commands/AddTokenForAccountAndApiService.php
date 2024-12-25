@@ -19,7 +19,7 @@ class AddTokenForAccountAndApiService extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Добавление токена для аккаунта и для определенного api-сервиса';
 
     /**
      * Execute the console command.
@@ -30,6 +30,8 @@ class AddTokenForAccountAndApiService extends Command
         $apiServiceId = $this->argument('apiServiceId');
         $tokenId = $this->argument('tokenId');
         $token = $this->argument('token');
+
+        //TODO: добавить проверку, что у api-сервиса может быть токен такого типа
         $tokenItem = Account_api_service::query()->create([
             'account_id' => $accountId,
             'api_service_id' => $apiServiceId,

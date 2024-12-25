@@ -18,6 +18,7 @@ abstract class Controller
      */
     public static function getData(string $url, string $dateFrom, string $dateTo, string $token, string $key, int $page = 1)
     {
+        //Оповещаем пользователя, если возникает ошибка 429 и останавливаем процесс записи данных в бд
         try {
             //abort(429);
             $response = Http::get($url . "?dateFrom=$dateFrom&dateTo=$dateTo&page=$page&key=$token");
@@ -28,7 +29,6 @@ abstract class Controller
                 //logs()->info("Не удалось добавить данные для аккаунта с токеном $token");
                 // Повтор запроса позже
                 die();
-
             }
         }
     }

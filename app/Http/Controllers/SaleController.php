@@ -67,6 +67,10 @@ class SaleController extends Controller
         echo 'Данные успешно добавлены в БД';
     }
 
+    /**
+     * Запись актуальных данных 'за сегодня' в таблицу Sales
+     * @param string $token токен доступа к api
+     */
     public static function updateSalesTable(string $token)
     {
         $url = 'http://89.108.115.241:6969/api/sales';
@@ -98,8 +102,7 @@ class SaleController extends Controller
             ->get();
 
         //Если количество данных, полученных по api, и в моей БД совпадают
-        if ($allData->count() === $myData->count())
-        {
+        if ($allData->count() === $myData->count()) {
             echo 'Новых данных нет';
             return;
         }
@@ -140,6 +143,6 @@ class SaleController extends Controller
                 'is_storno' => $data['is_storno'],
             ]);
         }
-        echo 'Данные успешно обновлены в БД';
+        echo 'Данные в таблице Sales успешно обновлены';
     }
 }

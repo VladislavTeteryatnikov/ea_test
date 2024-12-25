@@ -57,6 +57,10 @@ class OrderController extends Controller
         echo 'Данные успешно добавлены в БД';
     }
 
+    /**
+     * Запись актуальных данных 'за сегодня' в таблицу Orders
+     * @param string $token токен доступа к api
+     */
     public static function updateOrdersTable(string $token)
     {
         $url = 'http://89.108.115.241:6969/api/orders';
@@ -73,7 +77,7 @@ class OrderController extends Controller
             return;
         }
 
-        //Данные, полученные по api
+        //Актуальные данные, полученные по api
         $allData = self::getData($url, $dateFrom, $dateTo, $token, $keyForData);
 
         //Если по api не получили никаких новых данных
@@ -88,8 +92,7 @@ class OrderController extends Controller
             ->get();
 
         //Если количество данных, полученных по api, и в моей БД совпадают
-        if ($allData->count() === $myData->count())
-        {
+        if ($allData->count() === $myData->count()) {
             echo 'Новых данных нет';
             return;
         }
@@ -121,6 +124,6 @@ class OrderController extends Controller
                 'cancel_dt' => $data['cancel_dt'],
             ]);
         }
-        echo 'Данные успешно обновлены в БД';
+        echo 'Данные в таблице Orders успешно обновлены';
     }
 }

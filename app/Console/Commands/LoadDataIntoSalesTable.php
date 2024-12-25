@@ -41,8 +41,8 @@ class LoadDataIntoSalesTable extends Command
             return;
         }
 
+        //Удаляем все данные из таблицы для этого аккаунта и загружаем заново
         Sale::query()->where('account_id', $accountId)->delete();
-
         SaleController::writeInDb($token);
     }
 }

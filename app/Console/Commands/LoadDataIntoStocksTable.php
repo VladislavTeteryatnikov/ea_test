@@ -40,8 +40,8 @@ class LoadDataIntoStocksTable extends Command
             return;
         }
 
+        //Удаляем все данные из таблицы для этого аккаунта и загружаем заново
         Stock::query()->where('account_id', $accountId)->delete();
-
         StockController::writeInDb($token);
     }
 }

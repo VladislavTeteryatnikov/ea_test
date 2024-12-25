@@ -40,8 +40,8 @@ class LoadDataIntoOrdersTable extends Command
             return;
         }
 
+        //Удаляем все данные из таблицы для этого аккаунта и загружаем заново
         Order::query()->where('account_id', $accountId)->delete();
-
         OrderController::writeInDb($token);
     }
 }

@@ -19,7 +19,7 @@ class AddCompany extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Добавление компании';
 
     /**
      * Execute the console command.
