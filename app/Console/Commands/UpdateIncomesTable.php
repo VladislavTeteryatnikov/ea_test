@@ -23,14 +23,20 @@ class UpdateIncomesTable extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Обновление данных в таблице Incomes';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
-        IncomeController::updateIncomesTable($token);
+        //Обновляем данные только для тех аккаунтов, которые уже присутствуют в таблице Incomes
+        $accountsId = Income::query()->pluck('account_id')->unique();
+        foreach ($accountsId as $accountId) {
+            $token = Account_api_service::query()
+                ->where('account_id', $accountId)
+                ->value('token_access');
+            IncomeController::updateIncomesTable($token);
+        }
     }
 }

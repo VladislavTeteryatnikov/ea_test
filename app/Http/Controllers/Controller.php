@@ -18,8 +18,19 @@ abstract class Controller
      */
     public static function getData(string $url, string $dateFrom, string $dateTo, string $token, string $key, int $page = 1)
     {
-        $response = Http::get($url . "?dateFrom=$dateFrom&dateTo=$dateTo&page=$page&key=$token");
-        return $response->collect($key);
+        try {
+            //abort(429);
+            $response = Http::get($url . "?dateFrom=$dateFrom&dateTo=$dateTo&page=$page&key=$token");
+            return $response->collect($key);
+        } catch (\Exception $e) {
+            if ($e->getMessage() == 'Too many requests' || $e->getStatusCode() == 429) {
+                echo 'Превышен лимит запросов';
+                //logs()->info("Не удалось добавить данные для аккаунта с токеном $token");
+                // Повтор запроса позже
+                die();
+
+            }
+        }
     }
 
 

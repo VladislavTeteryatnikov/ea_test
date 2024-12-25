@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\IncomeController;
+use App\Http\RateLimiter;
 use App\Models\Account_api_service;
 use App\Models\Income;
 use Illuminate\Console\Command;
@@ -45,3 +46,4 @@ class LoadDataIntoIncomesTable extends Command
         IncomeController::writeInDb($token);
     }
 }
+
