@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\StockController;
+use App\Models\Account_api_service;
+use App\Models\Stock;
 use Illuminate\Console\Command;
 
 class LoadDataIntoStocksTable extends Command
@@ -12,7 +14,7 @@ class LoadDataIntoStocksTable extends Command
      *
      * @var string
      */
-    protected $signature = 'app:load-data-into-stocks-table';
+    protected $signature = 'app:load-data-into-stocks-table {token}';
 
     /**
      * The console command description.
@@ -26,7 +28,20 @@ class LoadDataIntoStocksTable extends Command
      */
     public function handle()
     {
-        $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
+        $token = $this->argument('token');
+        //$token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
+
+        //Проверяем, привязан ли аккаунт к токену
+        $accountId = Account_api_service::query()
+            ->where('token_access', '=', $token)
+            ->value('account_id');
+        if (!$accountId) {
+            echo 'Аккаунт не существует';
+            return;
+        }
+
+        Stock::query()->where('account_id', $accountId)->delete();
+
         StockController::writeInDb($token);
     }
 }

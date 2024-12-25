@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\SaleController;
+use App\Models\Account_api_service;
+use App\Models\Income;
+use App\Models\Sale;
 use Illuminate\Console\Command;
 
 class LoadDataIntoSalesTable extends Command
@@ -12,7 +15,7 @@ class LoadDataIntoSalesTable extends Command
      *
      * @var string
      */
-    protected $signature = 'app:load-data-into-sales-table';
+    protected $signature = 'app:load-data-into-sales-table {token}';
 
     /**
      * The console command description.
@@ -26,7 +29,20 @@ class LoadDataIntoSalesTable extends Command
      */
     public function handle()
     {
-        $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
+        $token = $this->argument('token');
+        //$token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
+
+        //Проверяем, привязан ли аккаунт к токену
+        $accountId = Account_api_service::query()
+            ->where('token_access', '=', $token)
+            ->value('account_id');
+        if (!$accountId) {
+            echo 'Аккаунт не существует';
+            return;
+        }
+
+        Sale::query()->where('account_id', $accountId)->delete();
+
         SaleController::writeInDb($token);
     }
 }
