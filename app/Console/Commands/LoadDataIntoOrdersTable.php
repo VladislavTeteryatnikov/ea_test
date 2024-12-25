@@ -26,6 +26,7 @@ class LoadDataIntoOrdersTable extends Command
      */
     public function handle()
     {
-        OrderController::writeInDb();
+        $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
+        OrderController::writeInDb($token);
     }
 }

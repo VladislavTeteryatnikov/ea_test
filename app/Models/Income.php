@@ -11,4 +11,8 @@ class Income extends Model
         'supplier_article', 'tech_size', 'barcode', 'quantity',
         'total_price', 'date_close', 'warehouse_name', 'nm_id',
     ];
+
+    protected $hidden = [
+        'id', 'account_id', 'created_at', 'updated_at'
+    ];
 }

@@ -26,6 +26,7 @@ class LoadDataIntoSalesTable extends Command
      */
     public function handle()
     {
-        SaleController::writeInDb();
+        $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
+        SaleController::writeInDb($token);
     }
 }

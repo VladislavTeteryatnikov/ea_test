@@ -2,24 +2,28 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\StockController;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\IncomeController;
+use App\Models\Account_api_service;
+use App\Models\Income;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class LoadDataIntoStocksTable extends Command
+class UpdateIncomesTable extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:load-data-into-stocks-table';
+    protected $signature = 'app:update-incomes-table';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Добавление данных в таблицу stocks';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
@@ -27,6 +31,6 @@ class LoadDataIntoStocksTable extends Command
     public function handle()
     {
         $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
-        StockController::writeInDb($token);
+        IncomeController::updateIncomesTable($token);
     }
 }

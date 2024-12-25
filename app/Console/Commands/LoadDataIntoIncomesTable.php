@@ -26,6 +26,7 @@ class LoadDataIntoIncomesTable extends Command
      */
     public function handle()
     {
-        IncomeController::writeInDb();
+        $token = 'E6kUTYrYwZq2tN4QEtyzsbEBk3ie';
+        IncomeController::writeInDb($token);
     }
 }

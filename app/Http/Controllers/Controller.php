@@ -16,7 +16,7 @@ abstract class Controller
      * @param int $page
      * @return \Illuminate\Support\Collection
      */
-    protected static function getData(string $url, string $dateFrom, string $dateTo, string $token, string $key, int $page = 1)
+    public static function getData(string $url, string $dateFrom, string $dateTo, string $token, string $key, int $page = 1)
     {
         $response = Http::get($url . "?dateFrom=$dateFrom&dateTo=$dateTo&page=$page&key=$token");
         return $response->collect($key);
