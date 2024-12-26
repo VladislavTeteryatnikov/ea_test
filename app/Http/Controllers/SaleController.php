@@ -83,7 +83,7 @@ class SaleController extends Controller
             ->where('token_access', '=', $token)
             ->value('account_id');
         if (!$accountId) {
-            echo 'Аккаунт не существует';
+            self::debugInfo('Аккаунт не существует');
             return;
         }
 
@@ -92,7 +92,7 @@ class SaleController extends Controller
 
         //Если по api не получили никаких новых данных
         if ($allData->isEmpty()){
-            echo 'Новых данных нет';
+            self::debugInfo('Новых данных нет');
             return;
         }
 
@@ -103,7 +103,7 @@ class SaleController extends Controller
 
         //Если количество данных, полученных по api, и в моей БД совпадают
         if ($allData->count() === $myData->count()) {
-            echo 'Новых данных нет';
+            self::debugInfo('Новых данных нет');
             return;
         }
 
@@ -143,6 +143,6 @@ class SaleController extends Controller
                 'is_storno' => $data['is_storno'],
             ]);
         }
-        echo 'Данные в таблице Sales успешно обновлены';
+        self::debugInfo('Данные в таблице Sales успешно обновлены');
     }
 }

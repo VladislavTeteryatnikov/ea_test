@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\Controller;
 use App\Models\Account_api_service;
 use Illuminate\Console\Command;
 
@@ -40,7 +41,7 @@ class AddTokenForAccountAndApiService extends Command
         ]);
 
         if ($tokenItem) {
-            echo "Токен $tokenItem успешно добавлен для аккаунта с id = $accountId и API-сервиса с id=$apiServiceId. Тип токена имеет id=$tokenId";
+            Controller::debugInfo("Токен $tokenItem успешно добавлен для аккаунта с id = $accountId и API-сервиса с id=$apiServiceId. Тип токена имеет id=$tokenId");
         }
     }
 }

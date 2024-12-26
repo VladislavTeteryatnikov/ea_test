@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\Controller;
 use App\Models\Api_service;
 use Illuminate\Console\Command;
 
@@ -35,7 +36,7 @@ class AddApiService extends Command
             ->orWhere('url', '=', $urlApiService)
             ->exists();
         if ($apiService) {
-            echo "Api сервис с таким названием или URL уже существует";
+            Controller::debugInfo("Api сервис с таким названием или URL уже существует");
             return;
         }
 
@@ -46,7 +47,7 @@ class AddApiService extends Command
         ]);
 
         if ($newApiService) {
-            echo "API-сервис $nameApiService успешно добавлен";
+            Controller::debugInfo("API-сервис $nameApiService успешно добавлен");
         }
     }
 }

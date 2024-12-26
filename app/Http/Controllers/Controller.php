@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Http;
 
 abstract class Controller
@@ -25,11 +26,20 @@ abstract class Controller
             return $response->collect($key);
         } catch (\Exception $e) {
             if ($e->getMessage() == 'Too many requests' || $e->getStatusCode() == 429) {
-                echo 'Превышен лимит запросов';
+                Controller::debugInfo('Превышен лимит запросов');
                 //logs()->info();
                 // Повтор запроса позже
                 die();
             }
+        }
+    }
+
+    public static function debugInfo(string $message)
+    {
+        if (env('APP_DEBUG')) {
+            dump($message);
+        } else {
+            echo $message;
         }
     }
 

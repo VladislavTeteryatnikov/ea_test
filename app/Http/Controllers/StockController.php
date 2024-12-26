@@ -21,7 +21,7 @@ class StockController extends Controller
             ->where('token_access', '=', $token)
             ->value('account_id');
         if (!$accountId) {
-            echo 'Аккаунт не существует';
+            self::debugInfo('Аккаунт не существует');
             return;
         };
         $keyForLinks = 'links';
@@ -57,7 +57,7 @@ class StockController extends Controller
             }
 
         }
-        echo 'Данные успешно добавлены в БД';
+        self::debugInfo('Данные успешно добавлены в БД');
     }
 
     /**
@@ -76,7 +76,7 @@ class StockController extends Controller
             ->where('token_access', '=', $token)
             ->value('account_id');
         if (!$accountId) {
-            echo 'Аккаунт не существует';
+            self::debugInfo('Аккаунт не существует');
             return;
         }
 
@@ -85,7 +85,7 @@ class StockController extends Controller
 
         //Если по api не получили никаких новых данных
         if ($allData->isEmpty()){
-            echo 'Новых данных нет';
+            self::debugInfo('Новых данных нет');
             return;
         }
 
@@ -96,7 +96,7 @@ class StockController extends Controller
 
         //Если количество данных, полученных по api, и в моей БД совпадают
         if ($allData->count() === $myData->count()) {
-            echo 'Новых данных нет';
+            self::debugInfo('Новых данных нет');
             return;
         }
 
@@ -128,7 +128,7 @@ class StockController extends Controller
                     'discount' => $data['discount'],
             ]);
         }
-        echo 'Данные в таблице Stocks успешно обновлены';
+        self::debugInfo('Данные в таблице Stocks успешно обновлены');
     }
 
 }

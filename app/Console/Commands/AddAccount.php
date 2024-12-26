@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\Controller;
 use App\Models\Account;
 use App\Models\Company;
 use Illuminate\Console\Command;
@@ -33,7 +34,7 @@ class AddAccount extends Command
         //Проверка, что такая компания существует
         $company =  Company::query()->find($companyId);
         if (!$company) {
-            echo "Компании с id = $companyId не существует";
+            Controller::debugInfo("Компании с id = $companyId не существует");
             return;
         }
 
@@ -43,7 +44,7 @@ class AddAccount extends Command
             'company_id' => $companyId,
         ]);
         if ($account) {
-            echo "Аккаунт $accountName успешно добавлен для комании $company->name";
+            Controller::debugInfo("Аккаунт $accountName успешно добавлен для комании $company->name");
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\StockController;
 use App\Models\Account_api_service;
 use App\Models\Stock;
@@ -36,7 +37,7 @@ class LoadDataIntoStocksTable extends Command
             ->where('token_access', '=', $token)
             ->value('account_id');
         if (!$accountId) {
-            echo 'Аккаунт не существует';
+            Controller::debugInfo('Аккаунт не существует');
             return;
         }
 

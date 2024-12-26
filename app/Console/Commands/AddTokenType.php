@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\Controller;
 use App\Models\Token;
 use Illuminate\Console\Command;
 
@@ -30,7 +31,7 @@ class AddTokenType extends Command
         //Тип токена должен быть уникальным
         $token =  Token::query()->where('type', '=', $tokenType)->exists();
         if ($token) {
-            echo "Token type $tokenType уже существует";
+            Controller::debugInfo("Token type $tokenType уже существует");
             return;
         }
 
@@ -40,7 +41,7 @@ class AddTokenType extends Command
         ]);
 
         if ($newToken) {
-            echo "Тип токена $tokenType успешно добавлен";
+            Controller::debugInfo("Тип токена $tokenType успешно добавлен");
         }
     }
 }

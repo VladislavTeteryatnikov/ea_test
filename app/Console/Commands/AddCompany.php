@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\Controller;
 use App\Models\Company;
 use Illuminate\Console\Command;
 
@@ -32,7 +33,7 @@ class AddCompany extends Command
         ]);
 
         if ($company) {
-            echo "Компания $nameCompany успешно добавлена";
+            Controller::debugInfo("Компания $nameCompany успешно добавлена");
         }
     }
 }
