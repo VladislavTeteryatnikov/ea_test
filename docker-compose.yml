@@ -1,23 +1,33 @@
-version: '3.5'
+version: '3'
+
 services:
-    php:
-        image: php:7.4-fpm
+    app:
+        build:
+            context: .
+            dockerfile: _docker/app/Dockerfile
         ports:
-            - 9000:9000
+            - "9001:9001"
         volumes:
-            - ./src:/var/www/html
-        links:
+            - ./:/var/www
+        depends_on:
             - mysql
+        container_name: app
+        networks:
+            - laravel
+
     mysql:
         image: mysql:5.7
+        volumes:
+            -  ./tmp/db:/var/lib/mysql
         environment:
-            MYSQL_ROOT_PASSWORD:
             MYSQL_DATABASE: ea_test
-            MYSQL_USER: root
-            MYSQL_PASSWORD:
+            MYSQL_ROOT_PASSWORD: root
         ports:
             - 3307:3306
-        expose:
-            - 3306
-volumes:
-    db_data: {}
+        container_name: mysql
+        networks:
+            - laravel
+
+networks:
+    laravel:
+        driver: bridge

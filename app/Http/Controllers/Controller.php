@@ -26,7 +26,7 @@ abstract class Controller
         } catch (\Exception $e) {
             if ($e->getMessage() == 'Too many requests' || $e->getStatusCode() == 429) {
                 echo 'Превышен лимит запросов';
-                //logs()->info("Не удалось добавить данные для аккаунта с токеном $token");
+                //logs()->info();
                 // Повтор запроса позже
                 die();
             }
