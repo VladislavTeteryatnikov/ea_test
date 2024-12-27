@@ -4,7 +4,7 @@ services:
             context: .
             dockerfile: _docker/app/Dockerfile
         ports:
-            - "9001:9001"
+            - "9007:9007"
         volumes:
             - ./:/var/www
         depends_on:

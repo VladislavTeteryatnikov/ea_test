@@ -44,7 +44,7 @@ class AddAccount extends Command
             'company_id' => $companyId,
         ]);
         if ($account) {
-            Controller::debugInfo("Аккаунт $accountName успешно добавлен для комании $company->name");
+            Controller::debugInfo("Аккаунт $accountName успешно добавлен для компании $company->name");
         }
     }
 }

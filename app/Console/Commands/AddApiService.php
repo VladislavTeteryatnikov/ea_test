@@ -36,7 +36,7 @@ class AddApiService extends Command
             ->orWhere('url', '=', $urlApiService)
             ->exists();
         if ($apiService) {
-            Controller::debugInfo("Api сервис с таким названием или URL уже существует");
+            Controller::debugInfo("Api-сервис с таким названием или URL уже существует");
             return;
         }
 
